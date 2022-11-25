@@ -79,11 +79,6 @@ public class Frame extends JFrame {
         setSize(pole.getSize());
         setResizable(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        try {
-            setIconImage(ImageIO.read(getClass().getResource("image/icon.jpeg")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         setVisible(true);
     }
 

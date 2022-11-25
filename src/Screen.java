@@ -75,7 +75,7 @@ public class Screen extends JPanel {
         g.setColor(new Color(248, 248, 255));
         g.fillRect(0, 0, getWidth(), getHeight());
         g.setFont(new Font("Times New Roman", 0, H - 5));
-        g.setColor(new Color(330099));
+        g.setColor(new Color(0x6E1E85));
         if (rasstanovka) {
             g2.setStroke(new BasicStroke(2));
             if (vert) {
@@ -105,17 +105,11 @@ public class Screen extends JPanel {
         //Выведение надписей
         g.drawString("Игрок", DXY + 4 * H, DXY - H);
         g.drawString("Компьютер", DXY + 16 * H, DXY - H);
-        g.drawString("Ходов игрока: ", DXY + 24 * H, DXY + 13 * H - (H/4));
-        g.drawString(String.valueOf(game.kolHodPlay), DXY + 29 * H, DXY + 13 * H - (H / 4));
-        g.drawString("Ходов комьютера: ", DXY + 24 * H, DXY + 14 * H - (H/4));
-        g.drawString(String.valueOf(game.kolHodComp), DXY + 30 * H + (H / 2), DXY + 14 * H - (H / 4));
 
         //Выводим цифры и буквы
         for (int i = 1; i <= 10; i++) {
-            //12345678910
             g.drawString(String.valueOf(i), DXY - H, DXY + i * H - (H / 4));
             g.drawString(String.valueOf(i), DXY + 12 * H, DXY + i * H - (H / 4));
-            //абвгдежзик
             g.drawString(number[i-1], DXY + (i-1) * H + (H / 4), DXY - 3);
             g.drawString(number[i-1], 13 * H + DXY + (i-1) * H + (H / 4), DXY - 3);
         }
@@ -125,7 +119,7 @@ public class Screen extends JPanel {
             for (int j = 0; j < 10; j++) {
                 //корабли противника
                 if (game.poleComp[i][j]!=0) {
-                    //Если это палуба раненного корабля, то выводим соотвествующее изображение
+                    //Если это палуба раненого корабля, то выводим соотвествующее изображение
                     if ((game.poleComp[i][j] >= 8) && (game.poleComp[i][j] <= 11)) {
                         g.drawImage(ranen, DXY + 13 * H + H * i, DXY + H * j, H, H, null);
                     }
@@ -175,13 +169,13 @@ public class Screen extends JPanel {
             g.drawLine(i + 13 * H, DXY, i + 13 * H, DXY + 10 * H);
 
             g2.setStroke(new BasicStroke(2));
-            g.setColor(new Color(330099));
+            g.setColor(new Color(0x6E1E85));
             g.drawRect(DXY, DXY, 10 * H, 10 * H);
             g.drawRect(DXY+13*H,DXY,10 * H,10 * H);
         }
 
         g.setFont(new Font("Times New Roman", 0, H));
-        g.setColor(new Color(330099));
+        g.setColor(new Color(0x6E1E85));
 
         //количество кораблей игрока
         g.drawRect(DXY, DXY + 11 * H, 4 * H, H);
@@ -238,12 +232,6 @@ public class Screen extends JPanel {
         p4 = 1;
     }
 
-    public void startAutoGame(){
-        rasstanovka = false;
-        checkNapr.setVisible(false);
-        timer.start();
-    }
-
     public void exit() {
         System.exit(0);
     }
@@ -268,7 +256,6 @@ public class Screen extends JPanel {
                         int i=(mX-(DXY+13*H))/H;
                         int j=(mY-DXY)/H;
                         if ((i>=0 && i<=9) && (j>=0 && j<=9)) {
-                            // System.out.println("Мы нажали на " + i+ " " +j);
                             if (game.poleComp[i][j] <= 4 && game.poleComp[i][j] >= -1) {
                                 //-1 это окружение не убитого корабля
                                 game.hodPlayer(game.poleComp, i, j);
@@ -300,29 +287,25 @@ public class Screen extends JPanel {
                 int j = (mY - DXY) / H;
                 if (p4 != 0 && isSelectP4 && mX > (DXY) && mY > (DXY) && mX < (DXY + 10 * H) && mY < DXY + 10 * H) {
                     isSelectP4 = false;
-                    //line4 = new Rectangle2D.Double(DXY + 24 * H, DXY, 4 * H, H);
-                    if (game.setPaluba(i, j, 4, vert)) {
+                    if (game.handSetPaluba(i, j, 4, vert)) {
                         p4--;
                     }
 
                 } else if (p3 != 0 && isSelectP3 && mX > (DXY) && mY > (DXY) && mX < (DXY + 10 * H) && mY < DXY + 10 * H) {
                     isSelectP3 = false;
-                    // line3 = new Rectangle2D.Double(DXY + 24 * H, DXY + 2 * H, 3 * H, H);
-                    if (game.setPaluba(i, j, 3, vert)) {
+                    if (game.handSetPaluba(i, j, 3, vert)) {
                         p3--;
                     }
 
                 } else if (p2 != 0 && isSelectP2 && mX > (DXY) && mY > (DXY) && mX < (DXY + 10 * H) && mY < DXY + 10 * H) {
                     isSelectP2 = false;
-                    //line2 = new Rectangle2D.Double(DXY + 24 * H, DXY + 4 * H, 2 * H, H);
-                    if (game.setPaluba(i, j, 2, vert)) {
+                    if (game.handSetPaluba(i, j, 2, vert)) {
                         p2--;
                     }
 
                 } else if (p1 != 0 && isSelectP1 && mX > (DXY) && mY > (DXY) && mX < (DXY + 10 * H) && mY < DXY + 10 * H) {
                     isSelectP1 = false;
-                    //line1 = new Rectangle2D.Double(DXY + 24 * H, DXY + 6 * H, 1 * H, H);
-                    if (game.setPaluba(i, j, 1, vert)) {
+                    if (game.handSetPaluba(i, j, 1, vert)) {
                         p1--;
                     }
                 }
@@ -348,7 +331,7 @@ public class Screen extends JPanel {
                 Graphics g = getGraphics();
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setStroke(new BasicStroke(2));
-                g.setColor(new Color(330099));
+                g.setColor(new Color(0x6E1E85));
                 if (isSelectP4) {
                     if(vert) g.drawRect(DXY + H * i, DXY + H * j, H*4, H);
                     else g.drawRect(DXY + H * i, DXY + H * j, H, H*4);
@@ -372,6 +355,4 @@ public class Screen extends JPanel {
         public void mouseMoved(MouseEvent e) {
         }
     }
-
-
 }
